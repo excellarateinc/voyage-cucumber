@@ -1,0 +1,20 @@
+{
+  "name": "voyage-cucumber",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "cucumber-js features/**/*.feature --require features/**/*.js",
+    "debug": "node --inspect --inspect-brk ./node_modules/cucumber/bin/cucumber-js --require ./features/**/*.js"
+  },
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "cucumber": "^4.2.1"
+  },
+  "dependencies": {
+    "btoa": "^1.2.1",
+    "request": "^2.87.0",
+    "request-promise-native": "^1.0.5"
+  }
+}
