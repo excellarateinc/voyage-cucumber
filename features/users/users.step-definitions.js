@@ -10,7 +10,7 @@ Given('I have a valid credentials', function () {
     this.password = ENV.PASSWORD;
 });
 
-When('attempt to get an access token', async function () {
+When('Attempt to get an access token', async function () {
     const clientCredentials = `${this.username}:${this.password}`;
     try {
         this.responseJson = await request({
@@ -68,9 +68,17 @@ When('I make a POST request to users', async function () {
                 Authorization: `Bearer ${accessToken}`
             },
             body:{
-                "firstName": "user",
-                "lastName": 'user',
-                "username": 'newUser'
+                "firstName": "foo",
+                "lastName": "bar",
+                "username": "foobar",
+                "email": "foo@Lssinc.com",
+                "password": "1a34A67*",
+                "phones": [
+                    {
+                        "phoneType": "Mobile",
+                        "phoneNumber": "16518886022"
+                    }
+                ]
             },
             json: true
         });
@@ -79,7 +87,43 @@ When('I make a POST request to users', async function () {
     }
 });
 
-Then('receive an access token successfully', function () {
+When('Attempt to update first name of user having id 3', async function () {
+    try {
+        this.responseJson = await request({
+            method: 'PUT',
+            uri: ENV.PUT_URL,
+            headers: {
+                Authorization: `Bearer ${accessToken}`
+            },
+            body:{
+                "id": 3,
+                "firstName": "foo updated",
+                "lastName": "bar",
+                "password": "1a34A67*",
+                "username": "foobar5"
+            },
+            json: true
+        });
+    } catch(error) {
+        this.responseJson = error.error;
+    }
+});
+
+When('Attempt to delete a user', async function () {
+    try {
+        this.responseJson = await request({
+            method: 'DELETE',
+            uri: ENV.DELETE_URL,
+            headers: {
+                Authorization: `Bearer ${accessToken}`
+            }
+        });
+    } catch(error) {
+        this.responseJson = error.error;
+    }
+});
+
+Then('Receive an access token successfully', function () {
     const tokenData = JSON.parse(this.responseJson);
     const keys = Object.keys(tokenData);
     assert(keys.includes('created'));
@@ -102,5 +146,17 @@ Then('The response will be a user with id 1', function () {
 });
 
 Then('New user will be save', function () {
-    const savedUser = JSON.parse(this.responseJson);
+    const savedUser = this.responseJson;
+    assert.equal(savedUser.id, 3);
+    assert.equal(savedUser.firstName, 'foo');
+});
+
+Then('User updated successfully', function () {
+    const updatedUser = this.responseJson;
+    assert.equal(updatedUser.id, 3);
+    assert.equal(updatedUser.firstName, 'foo updated');
+});
+
+
+Then('User deleted successfully', function () {
 });
