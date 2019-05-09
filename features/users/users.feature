@@ -1,9 +1,9 @@
 Feature: Users
 
   Scenario: getting access token
-    Given I have a valid credentials
-    When Attempt to get an access token
-    Then Receive an access token successfully
+    Given I have a valid credentials, for users
+    When Attempt to get an access token, for users
+    Then Receive an access token successfully, for users
     
   Scenario: obtaining users list
     When I attempt to get users list from the API
@@ -13,7 +13,7 @@ Feature: Users
     When I attempt to get a single user with id 1 from the API
     Then The response will be a user with id 1
 
- Scenario: Making a POST request with json data
+  Scenario: Making a POST request with json data
     When I make a POST request to users
     Then New user will be save
 

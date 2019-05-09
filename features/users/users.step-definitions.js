@@ -3,14 +3,14 @@ const { Given, When, Then } = require('cucumber');
 const ENV = require('../../environment-variables');
 const request = require('request-promise-native');
 const btoa = require('btoa');
-var accessToken = "a"; // a variable to store the access token
+let accessToken = "a"; // a variable to store the access token
 
-Given('I have a valid credentials', function () {
+Given('I have a valid credentials, for users', function () {
     this.username = ENV.USERNAME;
     this.password = ENV.PASSWORD;
 });
 
-When('Attempt to get an access token', async function () {
+When('Attempt to get an access token, for users', async function () {
     const clientCredentials = `${this.username}:${this.password}`;
     try {
         this.responseJson = await request({
@@ -123,7 +123,7 @@ When('Attempt to delete a user', async function () {
     }
 });
 
-Then('Receive an access token successfully', function () {
+Then('Receive an access token successfully, for users', function () {
     const tokenData = JSON.parse(this.responseJson);
     const keys = Object.keys(tokenData);
     assert(keys.includes('created'));
