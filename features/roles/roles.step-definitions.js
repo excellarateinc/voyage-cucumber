@@ -88,7 +88,7 @@ When('Attempt to update name of role having id 3', async function () {
                 Authorization: `Bearer ${accessToken}`
             },
             body:{
-                "id": 13, // ==============================>>> change it to 3
+                "id": 3,
                 "name": "New Role updated",
                 "authority": "new.role"
             },
@@ -138,13 +138,13 @@ Then('The response will be a record of role with id 1', function () {
 
 Then('New role will be save', function () {
     const newRole = this.responseJson;
-    assert.equal(newRole.id, 13); // ==============================>>> change it to 3
+    assert.equal(newRole.id, 3);
     assert.equal(newRole.authority, 'new.role');
 });
 
 Then('Role updated successfully', function () {
     const role = this.responseJson;
-    assert.equal(role.id, 13); // ==============================>>> change it to 3
+    assert.equal(role.id, 3);
     assert.equal(role.name, 'New Role updated');
 });
 
